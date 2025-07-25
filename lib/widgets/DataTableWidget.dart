@@ -23,7 +23,13 @@ class DataTableWidget extends ConsumerWidget {
             return DataRow(
               key: ValueKey(task.id),
               cells: [
-                DataCell(Text(task.id.toString())),
+                DataCell(
+                  AnimatedOpacity(
+                    duration: Duration(milliseconds: 1000),
+                    opacity: task.done ? 0.2 : 1.0,
+                    child: Text(task.id.toString()),
+                  ),
+                ),
                 DataCell(
                   GestureDetector(
                     onTap: () {
@@ -50,10 +56,20 @@ class DataTableWidget extends ConsumerWidget {
                         ),
                       );
                     },
-                    child: Text(task.name),
+                    child: AnimatedOpacity(
+                      duration: Duration(milliseconds: 1000),
+                      opacity: task.done ? 0.4 : 1.0,
+                      child: Text(task.name),
+                    ),
                   ),
                 ),
-                DataCell(Text(task.time)),
+                DataCell(
+                  AnimatedOpacity(
+                    duration: Duration(milliseconds: 1000),
+                    opacity: task.done ? 0.4 : 1.0,
+                    child: Text(task.time),
+                  ),
+                ),
                 DataCell(
                   Checkbox(
                     key: ValueKey('checkbox-${task.id}'),
@@ -61,6 +77,8 @@ class DataTableWidget extends ConsumerWidget {
                     onChanged: (value) {
                       ref.read(taskProvider.notifier).toggleTask(task.id);
                     },
+                    activeColor: Colors.green, // Зелений чекбокс
+                    checkColor: Colors.white,
                   ),
                 ),
               ],
